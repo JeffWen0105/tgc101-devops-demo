@@ -37,13 +37,13 @@ function install_docker_packages(){
 }
 
 function setup_container(){
-    log_info "GET APP..." >> /tmp/startup.log
+    log_info "Getting APP..." >> /tmp/startup.log
     source /etc/profile
     git  -C /home/ubuntu/ clone https://gitlab.com/tgc101-tw/tgc101.git
     [[ -n $arg2 ]] && cd /home/ubuntu/tgc101 && bash initDB.sh $arg2
     cd /home/ubuntu/tgc101 && sudo docker-compose -f  $arg1 up -d 
      [[ "$?" != "0" ]] && log_err "Start App ERROR ...." 
-    log_info "App Startup ..." >> /tmp/startup.log
+    log_info "APP Started ..." >> /tmp/startup.log
 }
 
 function ci_cd(){
@@ -53,7 +53,7 @@ function ci_cd(){
     sudo useradd --comment 'GitLab Runner' --create-home gitlab-runner --shell /bin/bash
     sudo gitlab-runner install --user=gitlab-runner --working-directory=/home/gitlab-runner
     sudo gitlab-runner start
-    sudo gitlab-runner register --non-interactive  --url https://gitlab.com/ --registration-token $arg3  --executor "shell" --description "lab-tgc101-${hostname}" --tag-list "ubuntu2004-lab"
+    sudo gitlab-runner register --non-interactive  --url https://gitlab.com/ --registration-token $arg3  --executor "shell" --description "lab-tgc101-${HOSTNAME}" --tag-list "ubuntu2004-lab"
     sudo rm -rf /home/gitlab-runner/.bash_logout
     sudo usermod -aG ubuntu gitlab-runner
     sudo usermod -aG root gitlab-runner
