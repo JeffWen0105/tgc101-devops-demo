@@ -24,7 +24,7 @@ function log_err() {
 function init_env(){
     sudo timedatectl set-timezone Asia/Taipei
     sudo useradd ubuntu -m -s /bin/bash  2>/dev/null
-    [[ $arg4 != " "  ]] && echo $arg4 >> /home/ubuntu/.ssh/authorized_keys
+    [[ -n $arg4 ]] && echo $arg4 >> /home/ubuntu/.ssh/authorized_keys
     log_info "Init DONE ..." >> /tmp/startup.log
 }
 
@@ -40,7 +40,7 @@ function setup_container(){
     log_info "GET APP..." >> /tmp/startup.log
     source /etc/profile
     git  -C /home/ubuntu/ clone https://gitlab.com/tgc101-tw/tgc101.git
-    [[ $arg2 != " "  ]] && cd /home/ubuntu/tgc101 && bash initDB.sh $arg2
+    [[ -n $arg2 ]] && cd /home/ubuntu/tgc101 && bash initDB.sh $arg2
     cd /home/ubuntu/tgc101 && sudo docker-compose -f  $arg1 up -d 
      [[ "$?" != "0" ]] && log_err "Start App ERROR ...." 
     log_info "App Startup ..." >> /tmp/startup.log
@@ -68,7 +68,7 @@ function run(){
     init_env
     install_docker_packages
     setup_container
-    [[ $arg3 != " "  ]] && ci_cd
+    [[ -n $arg3 ]] && ci_cd
 }
 
 
