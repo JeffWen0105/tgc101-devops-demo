@@ -40,8 +40,8 @@ function setup_container(){
     log_info "GET APP..." >> /tmp/startup.log
     source /etc/profile
     git  -C /home/ubuntu/ clone https://gitlab.com/tgc101-tw/tgc101.git
-    cd /home/ubuntu/tgc101 && bash initDB.sh $arg1
-    cd /home/ubuntu/tgc101 && sudo docker-compose -f $arg2 up -d 
+    [[ $arg2 != " "  ]] && cd /home/ubuntu/tgc101 && bash initDB.sh $arg2
+    cd /home/ubuntu/tgc101 && sudo docker-compose -f  $arg1 up -d 
      [[ "$?" != "0" ]] && log_err "Start App ERROR ...." 
     log_info "App Startup ..." >> /tmp/startup.log
 }
@@ -68,7 +68,7 @@ function run(){
     init_env
     install_docker_packages
     setup_container
-    ci_cd
+    [[ $arg3 != " "  ]] && ci_cd
 }
 
 
