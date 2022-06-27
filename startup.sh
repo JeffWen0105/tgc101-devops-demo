@@ -53,7 +53,7 @@ function ci_cd(){
     sudo useradd --comment 'GitLab Runner' --create-home gitlab-runner --shell /bin/bash
     sudo gitlab-runner install --user=gitlab-runner --working-directory=/home/gitlab-runner
     sudo gitlab-runner start
-    sudo gitlab-runner register --non-interactive  --url https://gitlab.com/ --registration-token $arg3  --executor "shell" --description "lab-tgc101" --tag-list "ubuntu2004-lab-${hostname}"
+    sudo gitlab-runner register --non-interactive  --url https://gitlab.com/ --registration-token $arg3  --executor "shell" --description "lab-tgc101-${hostname}" --tag-list "ubuntu2004-lab"
     sudo rm -rf /home/gitlab-runner/.bash_logout
     sudo usermod -aG ubuntu gitlab-runner
     sudo usermod -aG root gitlab-runner
