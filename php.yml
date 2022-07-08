@@ -12,7 +12,7 @@ spec:
     spec:
       containers:
       - name: php
-        image: tgc101/lab-php:0.1
+        image: tgc101/lab-php:2.0
   selector:
     matchLabels:
       app: php
