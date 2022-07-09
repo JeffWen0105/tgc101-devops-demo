@@ -2,6 +2,7 @@
 - name: update php
   hosts: all
   tasks:
+    - name: update php
       shell: |
         sed -i "s/lab-php:2.0/lab-php:3.0/g" /lab/php.yml
         kubectl apply -f /lab/php.yml
